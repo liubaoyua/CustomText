@@ -13,34 +13,21 @@ import java.util.Map;
 import java.util.Set;
 
 import java.util.regex.Pattern;
-
 import liubaoyua.customtext.R;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
-
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-
 import android.app.ProgressDialog;
 import android.content.Context;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import android.text.method.LinkMovementMethod;
-
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,17 +35,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-
 import android.widget.ArrayAdapter;
-
 import android.widget.Filter;
-
 import android.widget.ImageView;
-
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SectionIndexer;
-
 import android.widget.TextView;
 
 
@@ -78,12 +60,8 @@ public class AppList extends Activity {
 
 
 		prefs = getSharedPreferences("liubaoyua.customtext_preferences", Context.MODE_WORLD_READABLE);
-
-
 		setContentView(R.layout.main);
-
 		ListView list = (ListView) findViewById(R.id.lstApps);
-
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -97,7 +75,6 @@ public class AppList extends Activity {
 				startActivity(i);
 			}
 		});
-
 		refreshApps();
 	}
 
@@ -150,20 +127,16 @@ public class AppList extends Activity {
 
 	@SuppressLint("DefaultLocale")
 	private void loadApps(ProgressDialog dialog) {
-
 		appList.clear();
-
 		PackageManager pm = getPackageManager();
 		List<PackageInfo> pkgs = getPackageManager().getInstalledPackages(PackageManager.GET_PERMISSIONS);
 		dialog.setMax(pkgs.size());
 		int i = 1;
 		for (PackageInfo pkgInfo : pkgs) {
 			dialog.setProgress(i++);
-
 			ApplicationInfo appInfo = pkgInfo.applicationInfo;
 			if (appInfo == null)
 				continue;
-			
 			appInfo.name = appInfo.loadLabel(pm).toString();
 			appList.add(appInfo);
 		}
@@ -275,10 +248,8 @@ public class AppList extends Activity {
 					}
 				}
 			}
-
 			result.values = items;
 			result.count = items.size();
-
 			return result;
 		}
 
@@ -322,8 +293,7 @@ public class AppList extends Activity {
 			filteredAppList.addAll(items);
 
 			filter = new AppListFilter(this);
-			inflater = getLayoutInflater();
-			
+			inflater = getLayoutInflater();	
 			alphaIndexer = new HashMap<String, Integer>();
 			for (int i = filteredAppList.size() - 1; i >= 0; i--) {
 				ApplicationInfo app = filteredAppList.get(i);
@@ -344,11 +314,8 @@ public class AppList extends Activity {
 
 			// create a list from the set to sort
 			List<String> sectionList = new ArrayList<String>(sectionLetters);
-
 			Collections.sort(sectionList);
-
 			sections = new String[sectionList.size()];
-
 			sectionList.toArray(sections);
 		}
 
@@ -458,7 +425,6 @@ public class AppList extends Activity {
 					}
 				}
 			}
-
 			return closestIndex;
 		}
 

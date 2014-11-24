@@ -24,20 +24,24 @@
 \n  贴吧的ID、应用名字、运营商
 \n  等等你能从手机上看到的文字(我不保证可以在所有设备上使用)
 \n  有什么建议可以在贴吧艾特我，或者发邮件到 liubaoyua@gmail.com
+\n  想更好的使用这个模块，建议去了解一下正则表达式。至于什么是正则表达式，百度去。。。
 \n-------------------------- 
 \n  本模块参考了几个开源程序
 \n  github上的<a href="https://github.com/mitchtech/XposedGroot">XposedGroot</a> 模块源码。
 \n  github上的<a href="https://github.com/GermainZ/Hodor">Hodor</a> 模块源码。
 \n  github上的<a href="https://github.com/rovo89/XposedAppSettings">App settings</a> 模块的 UI 源码。
 \n-------------------------- 	
-\n  另外感谢  rovo89 的 Xposed 和 App settings,以及  GermainZ 的 Hodor，mitchtech 的  XposedGroot,
+\n  另外感谢  rovo89 的 Xposed 和 App settings,以及  GermainZ 的 Hodor，mitchtech 的  XposedGroot,以及考拉帮忙修改我的渣渣英语翻译
 \n  还有贴吧里面的小伙伴，Xposed框架吧的各位吧务大大们.
 </string>
-    <string name="app_version">版本: 1.3.1</string>
+    <string name="app_version">版本: 1.4</string>
     <string name="app_notactive_warning">注意：虽然您现在可以直接进行配置，但只有在已安装 Xposed 框架并启用本模块时才会生效！</string>
     <string name="settings_apply_title">应用设置</string>
     <string name="settings_apply_detail">保存成功，重启应用后可用。是否现在关闭应用(需要 ROOT)?</string>
     <string name="menu_launch">启动应用</string>
-    <string name="menu_clean_settings">清除设置</string>
-    
+    <string name="menu_clear_current">清除当前页</string>
+    <string name="menu_clear_all">清除所有</string>
+	<string name="current_page">当前页：</string>
+	<string name="last_page">上一页</string>
+	<string name="next_page">下一页</string>
 </resources>

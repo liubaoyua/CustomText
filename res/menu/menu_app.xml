@@ -11,9 +11,14 @@
         android:showAsAction="withText"
         android:title="@string/menu_launch"/>
     <item
-        android:id="@+id/menu_app_clean_settings"
+        android:id="@+id/menu_app_clear_current"
         android:icon="@android:drawable/ic_menu_manage"
         android:showAsAction="withText"
-        android:title="@string/menu_clean_settings"/>
+        android:title="@string/menu_clear_current"/>
+    <item
+        android:id="@+id/menu_app_clear_all"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:showAsAction="withText"
+        android:title="@string/menu_clear_all"/>
 
 </menu>

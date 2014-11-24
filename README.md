@@ -1,4 +1,4 @@
-CustomText
-==========
+Custom-Text
+===========
 
-一个可以自定义替换文本的 Xposed 模块
+Xposed模块 允许您在修改 App 中的显示的文本

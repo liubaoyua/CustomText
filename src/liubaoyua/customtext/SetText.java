@@ -1,14 +1,18 @@
 package liubaoyua.customtext;
 
 import java.io.DataOutputStream;
-
+import java.util.HashMap;
+import java.util.Map;
 import liubaoyua.customtext.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,18 +21,23 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 public class SetText extends Activity {
 	
 	SharedPreferences preferences;
 	SharedPreferences.Editor editor;
-	
 	SharedPreferences globalpref;
 	SharedPreferences.Editor globaleditor;
 	String Package;
+	int page=0;
+	int maxpage;
 	private Switch swtActive;
+	TextView pageview;
+	static int EditTextNum = 10;
+	// the number of oristrname and newstrname shoube equal to EditTextNum
 	final int[] oristrname = new int[] {
 			R.id.origintext0,
 			R.id.origintext1, 
@@ -51,9 +60,9 @@ public class SetText extends Activity {
 			R.id.newtext7, 
 			R.id.newtext8,
 			R.id.newtext9};
-	EditText[] oristr = new EditText[oristrname.length];
-	EditText[] newstr = new EditText[newstrname.length];
-	
+	EditText[] OriStrEdittext = new EditText[EditTextNum];
+	EditText[] NewStrEdittext = new EditText[EditTextNum];
+	Map<String, String> data = new HashMap<String, String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,24 +81,63 @@ public class SetText extends Activity {
 		editor = preferences.edit();
 		globalpref = getSharedPreferences("liubaoyua.customtext_preferences", MODE_WORLD_READABLE);
 		globaleditor = globalpref.edit();
-		
+		maxpage=preferences.getInt("maxpage", 0);
+		ApplicationInfo app;
+		try {
+			app = getPackageManager().getApplicationInfo(Package,0);
+		} catch (NameNotFoundException e) {
+			// Close the dialog gracefully, package might have been uninstalled
+			finish();
+			return;
+		}
+		//Set app icon and app name
+		getActionBar().setIcon(app.loadIcon(getPackageManager()));
 		this.setTitle(AppName);
-		if (globalpref.getBoolean(Package, false)) 
-			swtActive.setChecked(true);
-			else 
-			swtActive.setChecked(false);
 
-		for (int i = 0; i < oristrname.length; i++){
-			oristr[i] = (EditText)findViewById(oristrname[i]);
-			newstr[i] = (EditText)findViewById(newstrname[i]);
-		}
 
 		
-		for(int i=0;i < oristrname.length; i++){
-			oristr[i].setText(preferences.getString("oristr"+i, null));
-			newstr[i].setText(preferences.getString("newstr"+i, null));
+		for (int i = 0; i < EditTextNum; i++){
+			OriStrEdittext[i] = (EditText)findViewById(oristrname[i]);
+			NewStrEdittext[i] = (EditText)findViewById(newstrname[i]);
 		}
-		
+	
+		pageview =(TextView)findViewById(R.id.pageview);
+		Button button1 = (Button)findViewById(R.id.button1);
+		Button button2 = (Button)findViewById(R.id.button2);
+//		Button button3 = (Button)findViewById(R.id.button3);
+		button1.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				if(page == 0)
+					return;
+				else{
+					SaveToMap();
+					page--;
+					SetEditText(page);
+				}
+			}
+		});
+		button2.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				SaveToMap();
+				page++;
+				SetEditText(page);
+			}
+		});
+//		button3.setOnClickListener(new OnClickListener()
+//		{
+//			public void onClick(View v)
+//			{
+//				if(pageview.getText().toString().matches("\\d{1,3}")){
+//					SaveToMap();
+//					page=Integer.parseInt(pageview.getText().toString())-1;
+//					SetEditText(page);
+//				}
+//			}
+//		});		
 		swtActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -104,10 +152,21 @@ public class SetText extends Activity {
 				
 			}
 		});
+	
+		LoadFromFile();
+		SetEditText(page);
+		if (globalpref.getBoolean(Package, false)) {
+			swtActive.setChecked(true);
+		}	
+		else {
+			swtActive.setChecked(false);
+		}
+			
+		
 		 
 	}
 
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_app, menu);
@@ -118,18 +177,13 @@ public class SetText extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		if (item.getItemId() == R.id.menu_save) {
-			for(int i=0;i<oristrname.length;i++){
-				editor.putString("oristr"+i, oristr[i].getText().toString());
-				editor.putString("newstr"+i, newstr[i].getText().toString());
-			}
-			editor.commit();
+			SaveToFile();
 			AlertDialog.Builder builder = new AlertDialog.Builder(SetText.this);
 			builder.setTitle(R.string.settings_apply_title);
 			builder.setMessage(R.string.settings_apply_detail);
 			builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					// Send the broadcast requesting to kill the app
 					killPackage(Package);
 					dialog.dismiss();
 				}
@@ -144,15 +198,21 @@ public class SetText extends Activity {
 		} else if (item.getItemId() == R.id.menu_app_launch) {
 			Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage(Package);
 			startActivity(LaunchIntent);
-		} else if (item.getItemId() == R.id.menu_app_clean_settings) {
-			for(int i=0;i<oristrname.length;i++){
-				oristr[i].setText("");
-				newstr[i].setText("");
+		} else if (item.getItemId() == R.id.menu_app_clear_current) {
+			for(int i=0;i<EditTextNum;i++){
+				OriStrEdittext[i].setText("");
+				NewStrEdittext[i].setText("");
 			}
+			SaveToMap();
+		}else if (item.getItemId() == R.id.menu_app_clear_all) {
+			data.clear();
+			maxpage = page = 0 ;
+			SetEditText(page);
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
+
 	private void killPackage(String packageToKill) {
 		// code modified from :
 		// http://forum.xda-developers.com/showthread.php?t=2235956&page=6
@@ -169,4 +229,67 @@ public class SetText extends Activity {
 			e.printStackTrace();
 		}
 	}
+	
+	void SetEditText(int page){
+		for(int i=0;i < EditTextNum; i++){
+			int num = page*EditTextNum +i;  
+			if (data.containsKey("oristr"+num))
+				OriStrEdittext[i].setText((String)data.get("oristr"+num));
+			else
+				OriStrEdittext[i].setText("");
+			if (data.containsKey("newstr"+num))
+				NewStrEdittext[i].setText((String)data.get("newstr"+num));
+			else
+				NewStrEdittext[i].setText("");
+		}
+		pageview.setText(page+1+"");
+	}
+	
+	void LoadFromFile(){
+		int num = (maxpage + 1) * EditTextNum;
+		for(int i=0;i<num;i++){
+			data.put("oristr"+i, preferences.getString("oristr"+i,""));
+			data.put("newstr"+i, preferences.getString("newstr"+i,""));
+		}
+	} 
+	
+	void SaveToMap(){
+		int num;
+		for(int i=0;i< EditTextNum ;i++){
+			num = i + page * EditTextNum; 
+			data.put("oristr"+num, OriStrEdittext[i].getText().toString());
+			data.put("newstr"+num, NewStrEdittext[i].getText().toString());
+		}
+//		Log.e("customtext",page+"page");
+		if (page>maxpage)
+			maxpage=page;
+	}
+	 
+
+	void SaveToFile() {
+		SaveToMap();
+		int num = (maxpage + 1) * EditTextNum;
+		int var = 0; 
+		for(int i=0;i<num;i++){
+			if(!data.get("oristr"+i).equals("")||!data.get("newstr"+i).equals("")){
+				editor.putString("oristr"+var, data.get("oristr"+i));
+				editor.putString("newstr"+var, data.get("newstr"+i));
+				var++;
+				Log.e("customtext", var+"var"+i+"i"+ data.get("newstr"+i));
+			}
+		}
+		for(int i=var;i<num;i++){
+			editor.remove("oristr"+i);
+			editor.remove("newstr"+i);
+
+		}
+		maxpage = var / EditTextNum ;
+		editor.putInt("maxpage", maxpage);
+		editor.commit();
+		data.clear();
+		LoadFromFile();
+		page=0;
+		SetEditText(page);
+	}
+	
 }

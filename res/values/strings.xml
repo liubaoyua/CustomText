@@ -15,12 +15,12 @@
     <string name="menu_refresh">Refresh</string>
     <string name="menu_about">About</string>
     <string name="hello_world">Hello world!</string>
-    <string name="new_text">New Text</string>
+    <string name="new_text">New      Text</string>
     <string name="original_text">Original Text</string>
     <string name="app_switch">App Switch</string>
-  	<string name="app_about">An <a href="http://forum.xda-developers.com/showthread.php?t=1574401">Xposed</a> module by liubaoyua.</string>
+  	<string name="app_about">A <a href="http://forum.xda-developers.com/showthread.php?t=1574401">Xposed</a> module developed by liubaoyua.</string>
 
-    <string name="app_version">Version: 1.3.1</string>
+    <string name="app_version">Version: 1.4</string>
     <string name="app_notactive_warning">Note: You can config this module now,
 but your configurations will take effect only if Xposed framework installed and enabled!</string>
     <string name="settings_apply_title">Apply settings</string>
@@ -29,6 +29,7 @@ but your configurations will take effect only if Xposed framework installed and 
 \n  IDs、App names、Carrier label,
 \n  and other texts you see from you devices(I\'m not sure it will work on all devices).
 \n  Any suggestion is welcomed. Send it to liubaoyua@gmail.com. 
+\n  IF you know the regular expression, you could make better use of this module. 
 \n-------------------------- 
 \n  I\'ve referred some open source projects.
 \n  The source code of<a href="https://github.com/mitchtech/XposedGroot">XposedGroot</a> from github.
@@ -37,6 +38,11 @@ but your configurations will take effect only if Xposed framework installed and 
 \n-------------------------- 	
 \n  And thank rovo89 for his Xposed and App settings, GermainZ for his Hodor and mitchtech for his XposedGroot.</string>
     <string name="menu_launch">Launch App</string>
-    <string name="menu_clean_settings">Clear Settings</string>
-    
+    <string name="menu_clear_current">Clear Current Page</string>
+    <string name="menu_clear_all">Clear All Pages</string>
+	<string name="current_page">Current page:</string>
+	<string name="last_page">Last page</string>
+	<string name="next_page">Next page</string>
+
+
 </resources>

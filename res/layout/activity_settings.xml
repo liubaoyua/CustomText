@@ -1,53 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" 
-    android:id="@+id/root">
+    android:orientation="vertical" >
 	
-
 	<TableLayout 
+	    android:id="@+id/tablelayout"
 	    android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:stretchColumns="0,1">
 	
-	    <TableRow >
-
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_gravity="center"
-	            android:text="@string/original_text"
-	            android:textColor="#0099CC"
-	            android:textSize="20sp" />
-
-	       <TextView
-	           android:layout_gravity="center"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:textSize="20sp"
-		    android:text="@string/new_text"
-		    android:textColor="#0099CC" />
-	    </TableRow>
-	    	    <TableRow >
-	        	<EditText
+		<TableRow >
+	        <EditText
                 android:id="@+id/origintext0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/text1"
                 android:maxLines="1"
                 android:singleLine="true" />
-    			<EditText
+    		<EditText
                 android:id="@+id/newtext0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/text2"
                 android:maxLines="1"
                 android:singleLine="true" />
-	    </TableRow>
+		</TableRow>
 	    
 	    <TableRow >
-	        	<EditText
+	   		<EditText
                 android:id="@+id/origintext1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,14 +44,14 @@
                 android:singleLine="true" />
 	    </TableRow>
 	    <TableRow >
-	     <EditText
+	     	<EditText
                 android:id="@+id/origintext2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/text1"
                 android:maxLines="1"
                 android:singleLine="true" />
-  		  <EditText
+  			<EditText
                 android:id="@+id/newtext2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,8 +59,8 @@
                 android:maxLines="1"
                 android:singleLine="true" />
       </TableRow>
-      	    <TableRow >
-	     <EditText
+      <TableRow >
+	    	<EditText
                 android:id="@+id/origintext3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,7 +75,7 @@
                 android:maxLines="1"
                 android:singleLine="true" />
       </TableRow>
-      	    <TableRow >
+      <TableRow >
 	     <EditText
                 android:id="@+id/origintext4"
                 android:layout_width="match_parent"
@@ -110,7 +91,7 @@
                 android:maxLines="1"
                 android:singleLine="true" />
       </TableRow>
-      	    <TableRow >
+      <TableRow >
 	     <EditText
                 android:id="@+id/origintext5"
                 android:layout_width="match_parent"
@@ -126,7 +107,7 @@
                 android:maxLines="1"
                 android:singleLine="true" />
       </TableRow>
-      	    <TableRow >
+      <TableRow >
 	     <EditText
                 android:id="@+id/origintext6"
                 android:layout_width="match_parent"
@@ -142,7 +123,7 @@
                 android:maxLines="1"
                 android:singleLine="true" />
       </TableRow>
-            	    <TableRow >
+      <TableRow >
 	     <EditText
                 android:id="@+id/origintext7"
                 android:layout_width="match_parent"
@@ -158,7 +139,7 @@
                 android:maxLines="1"
                 android:singleLine="true" />
       </TableRow>
-            	    <TableRow >
+      <TableRow >
 	     <EditText
                 android:id="@+id/origintext8"
                 android:layout_width="match_parent"
@@ -174,7 +155,7 @@
                 android:maxLines="1"
                 android:singleLine="true" />
       </TableRow>
-            	    <TableRow >
+      <TableRow >
 	     <EditText
                 android:id="@+id/origintext9"
                 android:layout_width="match_parent"
@@ -190,10 +171,33 @@
                 android:maxLines="1"
                 android:singleLine="true" />
       </TableRow>
+      <TableRow >
+      	<Button 
+	        android:id="@+id/button1"
+	        android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:text="@string/last_page"/>
+	    <Button 
+	  		android:id="@+id/button2"
+	        android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:text="@string/next_page"/>
+      </TableRow>
+      <TableRow>
+	   	<TextView
+	        android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/current_page"
+            android:textColor="#0099CC"
+            android:textSize="20sp" />
+		<TextView 
+          	android:id="@+id/pageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#0099CC"
+            android:textSize="20sp" />
+      </TableRow>
 	</TableLayout>
-    
-  
-    
-
-
-</LinearLayout>
+</ScrollView>
