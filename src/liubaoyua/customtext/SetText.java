@@ -4,13 +4,20 @@ import java.io.DataOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import liubaoyua.customtext.R;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,10 +28,11 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+@SuppressLint("WorldReadableFiles")
 public class SetText extends Activity {
 	
 	SharedPreferences preferences;
@@ -64,11 +72,13 @@ public class SetText extends Activity {
 	EditText[] NewStrEdittext = new EditText[EditTextNum];
 	Map<String, String> data = new HashMap<String, String>();
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		swtActive = new Switch(this);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setCustomView(swtActive);
 		getActionBar().setDisplayShowCustomEnabled(true);
 		setContentView(R.layout.activity_settings);
@@ -76,15 +86,21 @@ public class SetText extends Activity {
 		Intent intent = getIntent();
 		String AppName = intent.getStringExtra("name");
 		Package = intent.getStringExtra("package");
-		
 		preferences = getSharedPreferences(Package, MODE_WORLD_READABLE);
 		editor = preferences.edit();
 		globalpref = getSharedPreferences("liubaoyua.customtext_preferences", MODE_WORLD_READABLE);
 		globaleditor = globalpref.edit();
+
+		
 		maxpage=preferences.getInt("maxpage", 0);
 		ApplicationInfo app;
+
 		try {
-			app = getPackageManager().getApplicationInfo(Package,0);
+			if (Package.equals("liubaoyua.customtext_preferences")){
+				app = getPackageManager().getApplicationInfo("liubaoyua.customtext",0);
+			}
+			else
+				app = getPackageManager().getApplicationInfo(Package,0);
 		} catch (NameNotFoundException e) {
 			// Close the dialog gracefully, package might have been uninstalled
 			finish();
@@ -94,8 +110,6 @@ public class SetText extends Activity {
 		getActionBar().setIcon(app.loadIcon(getPackageManager()));
 		this.setTitle(AppName);
 
-
-		
 		for (int i = 0; i < EditTextNum; i++){
 			OriStrEdittext[i] = (EditText)findViewById(oristrname[i]);
 			NewStrEdittext[i] = (EditText)findViewById(newstrname[i]);
@@ -104,7 +118,6 @@ public class SetText extends Activity {
 		pageview =(TextView)findViewById(R.id.pageview);
 		Button button1 = (Button)findViewById(R.id.button1);
 		Button button2 = (Button)findViewById(R.id.button2);
-//		Button button3 = (Button)findViewById(R.id.button3);
 		button1.setOnClickListener(new OnClickListener()
 		{
 			public void onClick(View v)
@@ -127,17 +140,6 @@ public class SetText extends Activity {
 				SetEditText(page);
 			}
 		});
-//		button3.setOnClickListener(new OnClickListener()
-//		{
-//			public void onClick(View v)
-//			{
-//				if(pageview.getText().toString().matches("\\d{1,3}")){
-//					SaveToMap();
-//					page=Integer.parseInt(pageview.getText().toString())-1;
-//					SetEditText(page);
-//				}
-//			}
-//		});		
 		swtActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -161,16 +163,20 @@ public class SetText extends Activity {
 		else {
 			swtActive.setChecked(false);
 		}
-			
-		
-		 
 	}
 
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_app, menu);
+		updateMenuEntries(getApplicationContext(), menu, Package);
 		return true;
+	}
+	
+	public static void updateMenuEntries(Context context, Menu menu, String pkgName) {
+		if (context.getPackageManager().getLaunchIntentForPackage(pkgName) == null) {
+			menu.findItem(R.id.menu_app_launch).setEnabled(false);
+		}
 	}
 	
 	@Override
@@ -178,6 +184,10 @@ public class SetText extends Activity {
 
 		if (item.getItemId() == R.id.menu_save) {
 			SaveToFile();
+			if (Package.equals("liubaoyua.customtext_preferences")){
+				Toast.makeText(getApplicationContext(), getString(R.string.menu_global_replacement_saved),Toast.LENGTH_SHORT).show();  
+				return super.onOptionsItemSelected(item);
+			}
 			AlertDialog.Builder builder = new AlertDialog.Builder(SetText.this);
 			builder.setTitle(R.string.settings_apply_title);
 			builder.setMessage(R.string.settings_apply_detail);
@@ -208,7 +218,10 @@ public class SetText extends Activity {
 			data.clear();
 			maxpage = page = 0 ;
 			SetEditText(page);
-		}
+		}else if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+		}else if (item.getItemId() == R.id.menu_exit)
+			finish();
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -242,7 +255,7 @@ public class SetText extends Activity {
 			else
 				NewStrEdittext[i].setText("");
 		}
-		pageview.setText(page+1+"");
+		pageview.setText(page+"");
 	}
 	
 	void LoadFromFile(){
@@ -260,7 +273,6 @@ public class SetText extends Activity {
 			data.put("oristr"+num, OriStrEdittext[i].getText().toString());
 			data.put("newstr"+num, NewStrEdittext[i].getText().toString());
 		}
-//		Log.e("customtext",page+"page");
 		if (page>maxpage)
 			maxpage=page;
 	}
@@ -275,7 +287,6 @@ public class SetText extends Activity {
 				editor.putString("oristr"+var, data.get("oristr"+i));
 				editor.putString("newstr"+var, data.get("newstr"+i));
 				var++;
-				Log.e("customtext", var+"var"+i+"i"+ data.get("newstr"+i));
 			}
 		}
 		for(int i=var;i<num;i++){

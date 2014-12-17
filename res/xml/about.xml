@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen 
+        android:title="Custom Text 1.5" 
+        android:summary="@string/about_author">
+        <intent android:action="android.intent.action.VIEW" 
+                		android:data="http://weibo.com/u/2194313104" />
+    </PreferenceScreen>
+    <PreferenceScreen 
+        android:title="@string/module_function" 
+        android:summary="@string/module_function_summary">
+    </PreferenceScreen>
+    <PreferenceScreen 
+        android:title="@string/about_module" 
+        android:summary="@string/about_module_summary">
+    </PreferenceScreen>
+    <PreferenceScreen 
+        android:title="@string/suggestion" 
+        android:summary="@string/suggestion_summary">
+    </PreferenceScreen>
+    <Preference 
+		android:title="Xposed 框架吧"
+		android:summary="@string/XposedFrameworkBar">
+            <intent android:action="android.intent.action.VIEW" 
+                		android:data="http://tieba.baidu.com/f?kw=xposed%E6%A1%86%E6%9E%B6" />
+    </Preference>
+    <PreferenceCategory android:title="@string/refered_module">
+        <Preference android:title="@string/refered_module1" android:summary="@string/refered_module1_summary">
+            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/mitchtech/XposedGroot" />
+        </Preference>
+       <Preference android:title="@string/refered_module2" android:summary="@string/refered_module2_summary">
+            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/GermainZ/Hodor" />
+        </Preference>
+        <Preference android:title="@string/refered_module3" android:summary="@string/refered_module3_summary">
+            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/rovo89/XposedAppSettings" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/translation">
+        <Preference android:title="@string/translation1" android:summary="@string/translator1_summary">
+        </Preference>
+       	<Preference android:title="@string/translation2" android:summary="@string/translator2_summary">
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

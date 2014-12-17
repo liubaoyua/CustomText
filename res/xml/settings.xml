@@ -7,7 +7,10 @@
             android:key="moduleswitch"
             android:title="@string/moduleswitch"
             android:summary="@string/moduleswitch_summery"/>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="ImageText"
+            android:title="@string/ImageText"
+            android:summary="@string/ImageText_summery"/>
     </PreferenceCategory>
-    
-
 </PreferenceScreen>

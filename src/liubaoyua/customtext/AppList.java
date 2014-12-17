@@ -1,9 +1,17 @@
 package liubaoyua.customtext;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 
 import java.util.Iterator;
@@ -16,8 +24,11 @@ import java.util.regex.Pattern;
 import liubaoyua.customtext.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -28,6 +39,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,12 +48,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Filter;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 @SuppressLint("WorldReadableFiles")
@@ -51,7 +65,8 @@ public class AppList extends Activity {
 	private ArrayList<ApplicationInfo> filteredAppList = new ArrayList<ApplicationInfo>();
 	private String nameFilter;
 	private SharedPreferences prefs;
-
+	private static File prefsdir = new File(Environment.getDataDirectory()+"/data/" + "liubaoyua.customtext" + "/shared_prefs" );
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -89,14 +104,30 @@ public class AppList extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		
+		case R.id.menu_global_replacement:
+			Intent i = new Intent(getApplicationContext(), SetText.class);
+			i.putExtra("name", getString(R.string.global_settings));
+			i.putExtra("package", "liubaoyua.customtext_preferences");
+			startActivity(i);
+			return true;
 		case R.id.menu_refresh:
 			refreshApps();
 			return true;
 		case R.id.menu_settings:
 			startActivity(new Intent(getApplicationContext(), Settings.class));
 			return true;
+		case R.id.menu_export:
+			doExport();
+			return true;
+		case R.id.menu_import:
+			startActivity(new Intent(getApplicationContext(), ImportList.class));
+			return true;	
 		case R.id.menu_about:
 			startActivity(new Intent(getApplicationContext(), About.class));
+			return true;
+		case R.id.menu_exit:
+			finish();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -121,9 +152,6 @@ public class AppList extends Activity {
 		}
 		return super.onKeyUp(keyCode, event);
 	}
-
-
-
 
 	@SuppressLint("DefaultLocale")
 	private void loadApps(ProgressDialog dialog) {
@@ -272,7 +300,6 @@ public class AppList extends Activity {
 	static class AppListViewHolder {
 		TextView app_name;
 		TextView app_package;
-		ImageView app_icon;
 
 
 		AsyncTask<AppListViewHolder, Void, Drawable> imageLoader;
@@ -438,5 +465,103 @@ public class AppList extends Activity {
 			return filter;
 		}
 	}
+	
+	private void doExport() {
+		final String[] name =new String[1];
+		final EditText backupNameEdit =new EditText(this);
+		backupNameEdit.setHint(R.string .backup_hint);
+		LinearLayout layout = new LinearLayout(this);
+		layout.setOrientation(LinearLayout.VERTICAL);
+		layout.addView(backupNameEdit);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.backup_name).setView(layout);
+		builder.setPositiveButton(android.R.string.yes, new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				name[0] = backupNameEdit.getText().toString();
+				if (name[0].matches("^\\s*$")||name[0].length()==0){
+					System.out.println(true);
+					Date d = new Date();  
+			        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");  
+			        name[0] = sdf.format(d);  
+				}
+				new ExportTask().execute(new File(Environment.getExternalStorageDirectory().getAbsolutePath() 
+						+ "/Custom Text",name[0]));
+				dialog.dismiss();
+			}
+		});
+		builder.setNegativeButton(android.R.string.no, new OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.create().show();
+	}
 
+	private class ExportTask extends AsyncTask<File, String, String> {
+		@Override
+		protected String doInBackground(File... params) {
+			File backupdir = params[0];
+			if(!backupdir.exists())
+				backupdir.mkdirs();
+			if(prefsdir.exists()){
+				String files[] = prefsdir.list();  
+				if(files.length!=0){
+					for (String file : files) {  
+				    	File srcFile = new File(prefsdir, file);  
+					   	File destFile = new File(backupdir, file);  
+				     	try {
+							copyFile(srcFile, destFile);
+						} catch (IOException ex) {
+							return getString(R.string.imp_exp_export_error, ex.getMessage());
+						}  
+					}  	
+				}
+			}	
+		return getString(R.string.imp_exp_exported, backupdir.toString());
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			Toast.makeText(AppList.this, result, Toast.LENGTH_LONG).show();
+		}
+	}
+	
+	private static void copyFile(File source, File dest) throws IOException {
+		InputStream in = null;
+		OutputStream out = null;
+		boolean success = false;
+		try {
+			in = new FileInputStream(source);
+			out = new FileOutputStream(dest);
+			byte[] buf = new byte[10 * 1024];
+			int len;
+			while ((len = in.read(buf)) > 0) {
+				out.write(buf, 0, len);
+			}
+			out.flush();
+			out.close();
+			out = null;
+			success = true;
+		} catch (IOException ex) {
+			throw ex;
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception ex) {
+				}
+			}
+			if (out != null) {
+				try {
+					out.close();
+				} catch (Exception ex) {
+				}
+			}
+			if (!success) {
+				dest.delete();
+			}
+		}
+	}
 }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
+    <item
+        android:id="@+id/menu_global_replacement"
+        android:showAsAction="withText"
+        android:title="@string/menu_global_replacement"/>
     <item
         android:id="@+id/menu_refresh"
         android:showAsAction="withText"
@@ -10,9 +13,19 @@
         android:showAsAction="withText"
         android:title="@string/menu_settings"/>
     <item
+        android:id="@+id/menu_export"
+        android:showAsAction="withText"
+        android:title="@string/menu_export"/>
+    <item
+        android:id="@+id/menu_import"
+        android:showAsAction="withText"
+        android:title="@string/menu_import"/>
+    <item
         android:id="@+id/menu_about"
-        android:icon="@android:drawable/ic_menu_help"
         android:showAsAction="withText"
         android:title="@string/menu_about"/>
-
+	 <item
+        android:id="@+id/menu_exit"
+        android:showAsAction="withText"
+        android:title="@string/menu_exit"/>
 </menu>

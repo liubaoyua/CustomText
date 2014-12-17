@@ -1,14 +1,29 @@
 package liubaoyua.customtext;
 
-import android.app.Activity;
+import java.util.List;
+
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
+import android.view.MenuItem;
 
-
-public class About extends Activity {
+public class About extends PreferenceActivity
+{
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+        getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
+        addPreferencesFromResource(R.xml.about);
+		
+	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_about);
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+		}
+		return super.onOptionsItemSelected(item);
 	}
-}
+}	

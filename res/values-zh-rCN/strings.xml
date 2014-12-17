@@ -1,41 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="text1">输入原始文本</string>
     <string name="text2">输入替换文本</string>
     <string name="confirm">保存</string>
     <string name="describe">一个可以自定义替换文字的模块 by liubaoyua from Xposed框架吧 </string>
     <string name="app_name">文本自定义</string>
     <string name="app_loading">正在读取中，请稍等</string>
-    <string name="app_searchhint">App名或包名</string>
+    <string name="app_searchhint">应用名或包名</string>
     <string name="menu_settings">设置</string>
     <string name="global_settings">全局设置</string>
     <string name="moduleswitch">模块开关</string>
     <string name="moduleswitch_summery">启用/禁用模块</string>
     <string name="menu_refresh">刷新</string>
     <string name="menu_about">关于</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="new_text">新文本</string>
-    <string name="original_text">原文本</string>
-    <string name="app_switch">应用开关</string>
-   <string name="app_about">本  <a href="http://forum.xda-developers.com/showthread.php?t=1574401">Xposed</a> 模块由 liubaoyua 开发。
- \n 欢迎访问<a href="http://tieba.baidu.com/f?kw=xposed%E6%A1%86%E6%9E%B6"> Xposed框架吧</a>讨(shui)论(tie)Xposed的模(you)块(guan)和(mei)使(guan)用(de)技(shi)巧(qing)。</string>
-    <string name="app_description">本模块允许您在修改 App 中的显示的文本，比如：
-\n  贴吧的ID、应用名字、运营商
-\n  等等你能从手机上看到的文字(我不保证可以在所有设备上使用)
-\n  有什么建议可以在贴吧艾特我，或者发邮件到 liubaoyua@gmail.com
-\n  想更好的使用这个模块，建议去了解一下正则表达式。至于什么是正则表达式，百度去。。。
-\n-------------------------- 
-\n  本模块参考了几个开源程序
-\n  github上的<a href="https://github.com/mitchtech/XposedGroot">XposedGroot</a> 模块源码。
-\n  github上的<a href="https://github.com/GermainZ/Hodor">Hodor</a> 模块源码。
-\n  github上的<a href="https://github.com/rovo89/XposedAppSettings">App settings</a> 模块的 UI 源码。
-\n-------------------------- 	
-\n  另外感谢  rovo89 的 Xposed 和 App settings,以及  GermainZ 的 Hodor，mitchtech 的  XposedGroot,以及考拉帮忙修改我的渣渣英语翻译
-\n  还有贴吧里面的小伙伴，Xposed框架吧的各位吧务大大们.
-</string>
-    <string name="app_version">版本: 1.4</string>
-    <string name="app_notactive_warning">注意：虽然您现在可以直接进行配置，但只有在已安装 Xposed 框架并启用本模块时才会生效！</string>
     <string name="settings_apply_title">应用设置</string>
     <string name="settings_apply_detail">保存成功，重启应用后可用。是否现在关闭应用(需要 ROOT)?</string>
     <string name="menu_launch">启动应用</string>
@@ -44,4 +21,44 @@
 	<string name="current_page">当前页：</string>
 	<string name="last_page">上一页</string>
 	<string name="next_page">下一页</string>
+    <string name="menu_export">导出</string>
+    <string name="menu_import">导入</string>
+    <string name="imp_exp_file_doesnt_exist">文件夹不存在: %s</string>
+    <string name="imp_exp_confirm">是否删除原来的设置并导入选择的备份?</string>
+    <string name="imp_exp_exported">设置文件已经导入到文件夹: %s</string>
+    <string name="imp_exp_export_error">导出失败： %s</string>
+    <string name="imp_exp_import_error">导入失败： %s</string>
+    <string name="imp_exp_imported">导入成功，设置已更改</string>
+    <string name="title_activity_import_list">选择并导入</string>
+    <string name="settings_default">默认值</string>
+    <string name="maxBackupNum_title">最大备份数目</string>
+    <string name="maxBackupNum_summary">修改最大备份数目</string>
+    <string name="delete">删除</string>
+    <string name="ImageText">深度替换</string>   
+  	<string name="ImageText_summery">开启选项可以修改更多文本，比如QQ的聊天记录，但会导致表情图片不正常.</string>   
+	<string name="about_author">作者 liubaoyua。点击打开我的微博链接</string>
+    <string name="module_function">模块功能</string>
+    <string name="module_function_summary">本模块可以帮助您修改应用中显示的文本，比如：应用名字、运营商标签 等手机上显示的文字。使用前确保安装了 Xposed 框架。如果模块不能正常使用，可以尝试重新在 Xposed 安装器中激活模块，并清除应用数据。</string>
+    <string name="about_module">关于模块</string>
+    <string name="about_module_summary">模块为兴趣之作，请自行承担风险。如有不爽，家无水表，不收快递，请勿跨省，谢谢合作</string>
+    <string name="suggestion">建议或反馈</string>
+    <string name="suggestion_summary">有任何想法可以贴吧艾特我或 E-mail 联系我 liubaoyua@gmail.com</string>
+    <string name="refered_module">参考模块</string>
+    <string name="XposedFrameworkBar">Xposed 框架中文讨论贴吧，可以来本吧讨论 Xposed 模块，点击打开链接</string>
+    <string name="refered_module1">mitchtech 的 XposedGroot</string>
+    <string name="refered_module1_summary">感谢 mitchtech 和他的开源模块 XposedGroot，点击查看 Github 链接</string>
+    <string name="refered_module2">GermainZ 的 Hodor</string>
+    <string name="refered_module2_summary">感谢 GermainZ 和他的开源模块 Hodor，点击查看 Github 链接</string>
+    <string name="refered_module3">rovo89 的 AppSettings</string>
+    <string name="refered_module3_summary">感谢作者 rovo89 和他的开源模块 AppSettings，点击查看 Github 链接</string>
+	<string name="translation">翻译</string>
+	<string name="translation1">俄语翻译</string>
+    <string name="translator1_summary">感谢 @dvaleron 提供俄语翻译</string> 
+    <string name="menu_global_replacement">全局替换</string>
+   <string name="menu_global_replacement_saved">保存成功，重启后生效</string>
+	<string name="backup_name">输入备份名</string>
+    <string name="backup_hint">留空则使用当前日期作为备份名</string>    
+    <string name="menu_exit">退出</string>
+    <string name="translation2">德语翻译</string>
+    <string name="translator2_summary">感谢 Nicolas Woelker 提供德语翻译</string> 
 </resources>

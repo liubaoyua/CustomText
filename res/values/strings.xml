@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="text1">Original Text</string>
     <string name="text2">New Text</string>
-    <string name="confirm">Save</string>
-    <string name="describe">A module helps you to replace texts with any texts you want. Developed by liubaoyua.</string>
+    <string name="describe">A module which helps you replace text with any text you want. Developed by liubaoyua.</string>
     <string name="app_name">Custom Text</string>
     <string name="app_loading">Now loading. Please wait...</string>
     <string name="app_searchhint">App name or package name</string>
@@ -14,35 +12,52 @@
     <string name="moduleswitch_summery">Enable / disable this module</string>
     <string name="menu_refresh">Refresh</string>
     <string name="menu_about">About</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="new_text">New      Text</string>
-    <string name="original_text">Original Text</string>
-    <string name="app_switch">App Switch</string>
-  	<string name="app_about">A <a href="http://forum.xda-developers.com/showthread.php?t=1574401">Xposed</a> module developed by liubaoyua.</string>
-
-    <string name="app_version">Version: 1.4</string>
-    <string name="app_notactive_warning">Note: You can config this module now,
-but your configurations will take effect only if Xposed framework installed and enabled!</string>
     <string name="settings_apply_title">Apply settings</string>
     <string name="settings_apply_detail">Saved. It may take effect after relaunch the application. Kill the application now(root required)?</string>
-      <string name="app_description">A module helps you to replace texts with any texts you want. Such as：
-\n  IDs、App names、Carrier label,
-\n  and other texts you see from you devices(I\'m not sure it will work on all devices).
-\n  Any suggestion is welcomed. Send it to liubaoyua@gmail.com. 
-\n  IF you know the regular expression, you could make better use of this module. 
-\n-------------------------- 
-\n  I\'ve referred some open source projects.
-\n  The source code of<a href="https://github.com/mitchtech/XposedGroot">XposedGroot</a> from github.
-\n  The source code of<a href="https://github.com/GermainZ/Hodor">Hodor</a> from github.
-\n  The source code of<a href="https://github.com/rovo89/XposedAppSettings">App settings</a> from github.
-\n-------------------------- 	
-\n  And thank rovo89 for his Xposed and App settings, GermainZ for his Hodor and mitchtech for his XposedGroot.</string>
     <string name="menu_launch">Launch App</string>
     <string name="menu_clear_current">Clear Current Page</string>
     <string name="menu_clear_all">Clear All Pages</string>
-	<string name="current_page">Current page:</string>
-	<string name="last_page">Last page</string>
-	<string name="next_page">Next page</string>
-
-
+    <string name="current_page">Current page:</string>
+    <string name="last_page">Previous page</string>
+    <string name="next_page">Next page</string>
+    <string name="menu_export">Export</string>
+    <string name="menu_import">Import</string>
+    <string name="imp_exp_file_doesnt_exist">Folder does not exist: %s</string>
+    <string name="imp_exp_confirm">Import backup and overwrite all current settings?</string>
+    <string name="imp_exp_exported">Settings exported to folder: %s</string>
+    <string name="imp_exp_export_error">Export failed: %s</string>
+    <string name="imp_exp_import_error">Import failed: %s</string>
+    <string name="imp_exp_imported">Import successful; settings overwritten</string>
+    <string name="title_activity_import_list">Select to import</string>
+    <string name="settings_default">Default value</string>
+    <string name="maxBackupNum_title">Max backup history</string>
+    <string name="maxBackupNum_summary">Change the maximum number of backups</string>
+    <string name="delete">Delete</string>
+    <string name="ImageText">Extended Replacement</string>   
+    <string name="ImageText_summery">Enable this option to replace text more deeply. It is for texts which may include emotion smileys, like chatting record of QQ. However, it may cause emojis to look abnormal.</string>
+    <string name="about_author">Author: liubaoyua. Click to open my MicroBlog page.</string>
+    <string name="module_function">Module Function</string>
+    <string name="module_function_summary">It helps you replace texts such as: IDs, App names, carrier label, etc. Xposed required. If this module doesn\'t work, try to reactivate it in Xposed installer, and clear this app\'s data.</string>
+    <string name="about_module">About Module</string>
+    <string name="about_module_summary">It is made just for fun. Use it at your own risk. I am not responsible for what you do with it.</string>
+    <string name="suggestion">Suggestions or Feedback</string>
+    <string name="suggestion_summary">Any suggestion is welcome. Send it to liubaoyua@gmail.com. </string>
+    <string name="XposedFrameworkBar"> A Chinese Xposed forum. Click to visit</string>
+    <string name="refered_module">Referred Modules</string>
+    <string name="refered_module1">mitchtech\'s XposedGroot</string>
+    <string name="refered_module1_summary">Thank mitchtech and his project "XposedGroot", click to visit Github page.</string>
+    <string name="refered_module2">GermainZ\'s Hodor</string>
+    <string name="refered_module2_summary">Thank GermainZ and his project "Hodor", click to visit Github page.</string>
+    <string name="refered_module3">rovo89\'s AppSettings</string>
+    <string name="refered_module3_summary">Thank rovo89 and his project "AppSettings", click to visit Github page.</string> 
+    <string name="translation">Translation</string>
+    <string name="translation1">Russian Translation</string>
+    <string name="translator1_summary">Thank @dvaleron for supplying Russian translation.</string> 
+    <string name="menu_global_replacement">Global Replacement</string>
+    <string name="menu_global_replacement_saved">Saved. Reboot to take effect.</string>
+    <string name="backup_name">Input a backup name</string>
+    <string name="backup_hint">Leave it empty to use current time as the backup name.</string>    
+    <string name="menu_exit">Exit</string>
+    <string name="translation2">German Translation</string>
+    <string name="translator2_summary">Thank Nicolas Woelker for supplying German translation.</string> 
 </resources>
